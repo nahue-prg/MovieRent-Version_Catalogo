@@ -41,7 +41,7 @@ function Example(args) {
         color:'white',
         marginRight: 5
       }}>PILCHAS CLUB</NavbarText>
-        <NavbarToggler onClick={toggle} />
+        <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
           <UncontrolledDropdown nav inNavbar>

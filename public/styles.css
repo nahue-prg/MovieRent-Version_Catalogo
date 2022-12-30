@@ -1,3 +1,12 @@
 .pointer:hover{
     cursor: pointer;
 }
+
+.modal-ofertas{
+    margin-top: 40px;
+    text-align: center;
+}
+
+.modal-ofertas button{
+
+}
