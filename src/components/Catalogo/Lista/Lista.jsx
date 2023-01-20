@@ -8,7 +8,7 @@ const Lista = ({movies}) => {
   return (
     movies.map(({ id, title, overview, release_date, poster_path }) => {
       if(id !== null && id !== undefined) { console.log(id + title);
-        return <Item id={id} title={title} overview={overview} estreno={release_date} poster_path={poster_path}/>
+        return <Item key={id} id={id} title={title} overview={overview} estreno={release_date} poster_path={poster_path}/>
       }
     })
   )

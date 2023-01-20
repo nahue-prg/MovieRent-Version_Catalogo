@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CartWidget from '../CartWidget/CartWidget.jsx';
 import { TbMovie } from 'react-icons/tb';
+import axios from 'axios';
 import {
   Collapse,
   Navbar,
@@ -17,13 +18,24 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
 
-function Example(categorias) {
+function NavBar() {
+
   const [isOpen, setIsOpen] = useState(false);
 
+  const  [categorias, setCategorias] = useState([])  
+   
+  /*Obtengo las categorias que va a contener el NavBar */
+  const getCategorias = () =>{
+   axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=af1f89a05a4477a5e6990c32d50ccc1d&language=en-US')
+   .then((res) => setCategorias(res.data.genres))
+  }
+
+  useEffect(() => {
+    getCategorias();
+  }, [])
+
   const toggle = () => setIsOpen(!isOpen);
-console.log("Estoy en navbar" );
-console.log(Array.isArray(categorias));
-console.log(categorias)
+
   return (
     <div>
       <Navbar 
@@ -55,9 +67,7 @@ console.log(categorias)
               right  
               color="dark"
               dark>
-                <DropdownItem>Accion</DropdownItem>
-                <DropdownItem>Ciencia Ficcion</DropdownItem>
-                <DropdownItem>Infantiles</DropdownItem>
+                {categorias.map((categoria) => <Link to={`/categoria/${categoria.id}`} style={{textDecoration:'none', color:'#ccc'}} key={categoria.id}><DropdownItem>{categoria.name}</DropdownItem></Link> )}
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
@@ -78,7 +88,7 @@ console.log(categorias)
   );
 }
 
-export default Example;
+export default NavBar;
 
 
 

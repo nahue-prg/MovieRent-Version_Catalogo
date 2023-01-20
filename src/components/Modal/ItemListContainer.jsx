@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Link} from 'react-router-dom'
 
 function ItemListContainer(args) {
   const [modal, setModal] = useState(false);
@@ -10,17 +11,19 @@ function ItemListContainer(args) {
   return (
     <div className='container modal-ofertas'>
       <Button color="primary" onClick={toggle}>
-        Ofertas
+        Catalogo de peliculas
       </Button>
       <Modal isOpen={modal} toggle={toggle} {...args}>
-        <ModalHeader toggle={toggle}>PILCHAS CLUB - Ofertas</ModalHeader>
+        <ModalHeader toggle={toggle}>Movie | Rent</ModalHeader>
         <ModalBody>
-          Proximamente te traeremos las ofertas mas novedosas de PILCHAS CLUB!
+          Proximamente series..
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
-             Aceptar
-          </Button>{' '}
+        <Link to="/Peliculas" style={{textDecoration:'none', color:'white'}}>
+            <Button color="primary" onClick={toggle}>
+              Ver catalogo
+            </Button>
+          </Link>
           <Button color="secondary" onClick={toggle}>
             Cancelar
           </Button>

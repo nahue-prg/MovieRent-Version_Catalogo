@@ -11,7 +11,7 @@ const Item = ({id, title, overview, estreno, poster_path}) => {
         <CardTitle>{title}</CardTitle>
          <CardSubtitle>{`Estreno: ${estreno}`}</CardSubtitle> 
         <CardText>{overview}</CardText>
-        <Link to={`${id}`}><Button>Rent</Button></Link>
+        <Link to={`${id}`}><Button color="primary">Ver detalle</Button></Link>
       </CardBody>
     </Card>
   )
