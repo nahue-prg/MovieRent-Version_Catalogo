@@ -3,6 +3,7 @@ import Lista from '../Lista/Lista'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from "react-router-dom";
+import styles from './CatDataStyles.css'
 
 const CatData = () => {
     const { id } = useParams();
@@ -38,7 +39,7 @@ const CatData = () => {
     }, [Movies]);
 
   return (
-    <div>
+    <div className='container d-flex flex-wrap justify-content-center ' >
         <Lista movies={Movies}></Lista>
     </div>
   )
