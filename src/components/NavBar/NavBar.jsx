@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import CartWidget from './CartWidget';
+import CartWidget from '../CartWidget/CartWidget.jsx';
+import { TbMovie } from 'react-icons/tb';
 import {
   Collapse,
   Navbar,
@@ -14,47 +15,49 @@ import {
   DropdownItem,
   NavbarText,
 } from 'reactstrap';
+import { Link } from 'react-router-dom'
 
-function Example(args) {
+function Example(categorias) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
+console.log("Estoy en navbar" );
+console.log(Array.isArray(categorias));
+console.log(categorias)
   return (
     <div>
-      <Navbar {...args}
+      <Navbar 
       color="dark"
       dark
       expand="lg"
       sticky='true'
       >
-        <NavbarBrand href="#" className='align-middle'  style={{
-          marginRight: 3
-        }}><img
-        alt="logo-pilchas-club"
-        src="/pilchas-logo.png"
-        style={{
-          width: 40,
-          marginRight: 0
-        }}/></NavbarBrand>
-        <NavbarText style={{
-        color:'white',
-        marginRight: 5
-      }}>PILCHAS CLUB</NavbarText>
+      <Link to="/"><NavbarBrand href="#" className='align-middle'  style={{
+        marginRight: 0,
+        display:'flex'
+      }}><TbMovie
+      style={{
+        color:'red',
+        marginRight: 3
+      }}/></NavbarBrand></Link>
+      <Link to="/" style={{textDecoration:'none'}}><NavbarText style={{
+      color:'white',
+      marginRight: 5
+      }}>Movie<span style={{color:'red', fontWeight:'bolder'}}></span>|<span style={{fontWeight:'bolder'}}>Rent</span></NavbarText></Link>
         <NavbarToggler onClick={toggle}/>
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
           <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                Productos
+                Categorias
               </DropdownToggle>
               <DropdownMenu 
               right  
               color="dark"
               dark>
-                <DropdownItem>Remeras</DropdownItem>
-                <DropdownItem>Buzos</DropdownItem>
-                <DropdownItem>Zapatillas</DropdownItem>
+                <DropdownItem>Accion</DropdownItem>
+                <DropdownItem>Ciencia Ficcion</DropdownItem>
+                <DropdownItem>Infantiles</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
