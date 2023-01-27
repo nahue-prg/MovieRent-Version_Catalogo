@@ -6,10 +6,29 @@ const CartWidget = ({number}) => {
   return (
     <div style={{
         display: 'inline-block',
-        textDecoration:'none',
+      
         color:'white',
-    }} className='pointer'>
-     <Button
+    }} >
+    <Button
+    color="white"
+    style={{
+        marginRight:10,
+        borderColor: "white",
+        color: "white",
+        borderWidth: 1 ,
+        display:'inline-block'
+    }}
+  >
+   {number}
+    </Button> 
+    <BsFillCartFill/>
+    </div>
+  )
+}
+
+export default CartWidget
+
+/* <Button
     color="white"
     size="sm"
     outline
@@ -22,10 +41,4 @@ const CartWidget = ({number}) => {
     }}
   >
    {number}
-  </Button>
-    <BsFillCartFill/>
-    </div>
-  )
-}
-
-export default CartWidget
+  </Button> */

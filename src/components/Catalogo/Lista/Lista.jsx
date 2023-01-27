@@ -8,7 +8,9 @@ const Lista = ({ movies }) => {
 
   // Divide the movies array into sub-arrays of 4 elements
   const movieRows = movies.reduce((rows, movie, index) => {
-    const rowIndex = Math.floor(index / 4);
+    /*Como queremos que colapse, calculamos el Mínimo común múltiplo de las cantidades de columnas por fila que necesitamos 
+    (Filas de 3, 4 y 2 columnas -> mcm 12) */
+    const rowIndex = Math.floor(index / 12);
     if (!rows[rowIndex]) {
       rows[rowIndex] = [];
     }
@@ -19,9 +21,9 @@ const Lista = ({ movies }) => {
   return (
     <> 
       {movieRows.map((row, index) => (
-        <div className="row" style={{marginTop:'30px'}} key={index}>
+        <div className="row"  key={index}>
           {row.map(({ id, title, overview, release_date, poster_path }) => (
-            <div className="col-12 col-xl-3 col-lg-4 col-md-6 d-flex justify-content-center" key={id}>
+            <div className="col-12 col-md-6 col-lg-4 col-xl-3   d-flex justify-content-center" key={id} style={{marginTop:'30px'}}>
               <Item
                 id={id}
                 title={title}

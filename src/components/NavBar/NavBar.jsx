@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CartWidget from '../CartWidget/CartWidget.jsx';
-import { TbMovie } from 'react-icons/tb';
 import axios from 'axios';
+import Logo from '../Logo/Logo.jsx';
 import {
   Collapse,
   Navbar,
@@ -14,16 +14,18 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from 'reactstrap';
 import { Link } from 'react-router-dom'
+
+import styles from "./styles.module.css"
 
 function NavBar() {
 
   const [isOpen, setIsOpen] = useState(false);
+  const [categorias, setCategorias] = useState([])  
+  
+  const toggle = () => setIsOpen(!isOpen);
 
-  const  [categorias, setCategorias] = useState([])  
-   
   /*Obtengo las categorias que va a contener el NavBar */
   const getCategorias = () =>{
    axios.get('https://api.themoviedb.org/3/genre/movie/list?api_key=af1f89a05a4477a5e6990c32d50ccc1d&language=en-US')
@@ -34,29 +36,25 @@ function NavBar() {
     getCategorias();
   }, [])
 
-  const toggle = () => setIsOpen(!isOpen);
-
-  return (
-    <div>
-      <Navbar 
+return (
+  <div  style={{width:'100%', backgroundColor:'#212529'}}>
+  <Navbar 
       color="dark"
       dark
       expand="lg"
       sticky='true'
+      style={{maxWidth:1300, margin:'auto'}}
+      > 
+      
+      <NavbarToggler onClick={toggle} className={styles.TogglerMobile} />  
+      <NavbarBrand href="#" className='align-middle'  
       >
-      <Link to="/"><NavbarBrand href="#" className='align-middle'  style={{
-        marginRight: 0,
-        display:'flex'
-      }}><TbMovie
-      style={{
-        color:'red',
-        marginRight: 3
-      }}/></NavbarBrand></Link>
-      <Link to="/" style={{textDecoration:'none'}}><NavbarText style={{
-      color:'white',
-      marginRight: 5
-      }}>Movie<span style={{color:'red', fontWeight:'bolder'}}></span>|<span style={{fontWeight:'bolder'}}>Rent</span></NavbarText></Link>
-        <NavbarToggler onClick={toggle}/>
+      <Logo dark={false}></Logo>
+      </NavbarBrand>
+           <NavItem className={styles.CartMobile}>
+          <CartWidget number={3}/>
+        </NavItem>
+        <NavbarToggler onClick={toggle} className={styles.ToglerDesktop} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
           <UncontrolledDropdown nav inNavbar>
@@ -64,8 +62,7 @@ function NavBar() {
                 Categorias
               </DropdownToggle>
               <DropdownMenu 
-              right  
-              color="dark"
+              center
               dark>
                 {categorias.map((categoria) => <Link to={`/categoria/${categoria.id}`} style={{textDecoration:'none', color:'#ccc'}} key={categoria.id}><DropdownItem>{categoria.name}</DropdownItem></Link> )}
               </DropdownMenu>
@@ -80,10 +77,10 @@ function NavBar() {
             </NavItem>
           </Nav>
         </Collapse>
-        <NavItem>
+        <NavItem className={styles.CartDesktop}>
           <CartWidget number={3}/>
         </NavItem>
-      </Navbar>
+    </Navbar>
     </div>
   );
 }

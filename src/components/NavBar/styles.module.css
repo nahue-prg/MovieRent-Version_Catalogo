@@ -1,0 +1,33 @@
+
+/*Mostramos los elementos segun el breakpoint de bootstrap en 992*/
+.TogglerMobile{
+    display: none;
+}
+.CartMobile{
+    display:none
+}
+
+@media screen and (max-width:992px)
+{
+    .ToglerDesktop{
+        display:none;
+    }
+    .TogglerMobile{
+        display: inline-block;
+    }
+    .CartMobile{
+        display:inline-block
+    }
+    .CartDesktop{
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+
+

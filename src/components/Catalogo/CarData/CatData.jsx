@@ -3,7 +3,6 @@ import Lista from '../Lista/Lista'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from "react-router-dom";
-import styles from './CatDataStyles.css'
 
 const CatData = () => {
     const { id } = useParams();
@@ -14,7 +13,6 @@ const CatData = () => {
 
     const getRandomMovies = () => {
         setMovies([]);
-        console.log("Soy una random movie");
         axios.get("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=af1f89a05a4477a5e6990c32d50ccc1d&page=1")
         .then((res) =>  {
             setMovies(res.data.results); 
@@ -23,7 +21,6 @@ const CatData = () => {
 
     const getGenereMovies = () =>{
         setMovies([]);
-        console.log("Soy un genero movie" + id);
         axios.get(`https://api.themoviedb.org/3/discover/movie?with_genres=${id}&api_key=af1f89a05a4477a5e6990c32d50ccc1d&page=1`)
         .then((res) => setMovies(res.data.results));
     }
