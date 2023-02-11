@@ -9,7 +9,7 @@ const ItemDetail = () => {
   const  [movie, setMovie] = useState({});
 
   const getMovieDetail = () => {
-    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=af1f89a05a4477a5e6990c32d50ccc1d`)
+    axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=af1f89a05a4477a5e6990c32d50ccc1d&language=es-ES&region=ES`)
     .then((res) => setMovie(res.data));
   }
 
