@@ -33,7 +33,7 @@ useEffect(() => {
 }, [])
 
   return (
-    <div className='container modal-ofertas'>
+    <div className='container modal-ofertas' style={{margin:0}}>
       {
         botonActivador!==undefined 
         ? 

@@ -10,7 +10,8 @@ import ItemDetail from "./components/ItemDetail/ItemDetail";
 import PostStore from "./components/PostStore/PostStore";
 import Slider from "./components/NetflixSlider";
 import { createContext, useEffect, useState } from "react";
-import CarritoCheckOut from "./components/CarritoCheckOut/CarritoCheckOut";
+import DetalleCompra from "./components/DetalleCompra/DetalleCompra";
+import FormularioPago from "./components/FormularioPago/FormularioPago";
 
 
 
@@ -106,7 +107,9 @@ function App() {
             <Route path="/Peliculas/:id" element={<ItemDetail />} />
             <Route path="/Categoria/:id" element={<CatData />} />
             <Route path="/PostMovies" element={<PostStore />} /> 
-            <Route path="/Carrito" element={<CarritoCheckOut/>}/>
+            <Route path="/Carrito" element={<DetalleCompra/>}/>
+            <Route path="/Pagar" element={<FormularioPago/>}/>
+            {/* <Route path="/Pedido" element={<FormularioPago/>}/> */}
         </Routes>
       </Carrito.Provider>
       <div className="app">

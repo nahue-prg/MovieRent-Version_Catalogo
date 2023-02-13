@@ -1,0 +1,18 @@
+.contenedor div{
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding:0;
+}
+
+.contenedor{
+    margin:auto;
+    padding:20px 0;
+    border-bottom: 1px solid white;
+    max-width: 1250px;
+}
+
+.contenedor:first-child{
+    
+}

@@ -6,6 +6,7 @@ import { Card, CardImg, CardText, CardBody,
 import { getWhereItems } from "../../code/funcionesComunes";
 import { Carrito } from "../../App";
 import ModalContainer from "../Modal/ModalContainer";
+import styles from "./styles.module.css"
 
 const ItemDetail = () => {
 
@@ -19,28 +20,18 @@ const ItemDetail = () => {
     console.log(auxiliar);
     setMovie(auxiliar);
   }
-
   
   useEffect(() => {
     getMovieDetail();
   }, [])
-
   
   const agregarAlCarrito = () => {
     let aux = [...CartData.productosCart];
-
     // Busca si el id del producto ya existe en el carrito
     const index = aux.findIndex(producto => producto.id === movie[0].id);
-    if (index !== -1) {
-      aux[index].cantidad += semana;
-    } else {
-      // Si el producto no existe en el carrito, agrega un nuevo objeto
-      aux.push({ id : movie[0].id , title :  movie[0].title ,  precio :  movie[0].precio , cantidad:  semana });
-  }
+    //Si existe le sumo la nueva cantidad de semanas, sino agrego un nuevo producto al carrito
+    index !== -1 ? aux[index].cantidad += semana :  aux.push({ id : movie[0].id , title :  movie[0].title ,  precio :  movie[0].precio , cantidad:  semana, imagen : movie[0].poster_path });
     CartData.setProductosCart(aux);
-    console.log("Estado actual del carrito: ")
-    console.log(CartData.productosCart);  
-    
   }
 
   const restarSemana = () => {
@@ -50,8 +41,8 @@ const ItemDetail = () => {
 
   return (
     movie[0] !== undefined ?
-    <Card key={id} style={{width:'80%', maxWidth:800, margin:'30px auto',border:'none',   background: 'linear-gradient(to left,   #bbb, #dddddd)'}}>
-      <CardImg  style={{fontWeight:'bolder', fontSize:'2rem', margin: 'auto', maxWidth:550, marginTop:50, borderRadius:10, boxShadow:'0px 0px 4px 2px rgba(0, 0, 0, 0.75)'}} top src={`https://image.tmdb.org/t/p/w500/${movie[0].poster_path}`} alt={movie.title}/>
+    <Card key={id} style={{width:'80%', maxWidth:550, margin:'30px auto',border:'none',   background: 'linear-gradient(to left,   #ccc, #fff)'}}>
+      <CardImg className="cardImg"  style={{fontWeight:'bolder', fontSize:'2rem', margin: 'auto', maxWidth:550 }} top src={`https://image.tmdb.org/t/p/w500/${movie[0].backdrop_path}`} alt={movie.title}/>
       <CardBody>
         <CardTitle style={{fontWeight:'bolder', fontSize:'1.8rem', textAlign: 'start', marginBottom:20}}>{movie[0].title}</CardTitle>
          <CardSubtitle style={{ fontSize:'1.2rem',textAlign: 'start', marginBottom:20}}>{movie[0].overview}</CardSubtitle> 
@@ -68,7 +59,6 @@ const ItemDetail = () => {
             </div>
             <div className="col-2 d-flex justify-content-center align-items-center">
               <Button color="primary" onClick={() => restarSemana()}>-</Button>
-              
             </div>
             <div className="col-3 d-flex justify-content-center align-items-center">
               <span style={{fontWeight:"bolder"}} >{semana.toString()} semana{semana == 1 ? "" :"s" }</span>
@@ -83,7 +73,7 @@ const ItemDetail = () => {
             </div>
           </div>
         </div>
-      <ModalContainer estado={CartData.productosCart} descripcion={` Titulo : ${movie[0].title} | 
+      <ModalContainer  estado={CartData.productosCart} descripcion={` Titulo : ${movie[0].title} | 
                                                                      Semanas de alquiller: ${semana} | \n
                                                                      Total: $${semana * parseFloat(movie[0].precio)} \n`} titulo={"Sumado al carrito!"} botonCerrar={"Ok"}/>
       </CardBody>

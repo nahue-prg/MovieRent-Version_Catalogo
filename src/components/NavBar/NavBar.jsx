@@ -45,7 +45,7 @@ function NavBar() {
         dark
         expand="lg"
         sticky="true"
-        className={styles.menuSuperior }
+        className={`sticky-top ${styles.menuSuperior}`}
         
         style={{ maxWidth: 1300, margin: "auto" }}
       >
