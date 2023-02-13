@@ -171,8 +171,8 @@ const PostStore = () => {
   };
 
    const fetchData = async () => {
-    const docsMovies = await getItems(itemsCollectionMovies);
-    setMovies(docsMovies);
+    // const docsMovies = await getItems(itemsCollectionMovies);
+    // setMovies(docsMovies);
     // const docsActores = await getItems(itemsCollectionActores);
     // setActores(docsActores);
     // try{

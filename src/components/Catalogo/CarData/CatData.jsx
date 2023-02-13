@@ -1,40 +1,35 @@
 import React from 'react'
 import Lista from '../Lista/Lista'
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from "react-router-dom";
-
+import {ordenarPorFecha, getRandomItems, getItemsWhereMemberArray} from '../../../code/funcionesComunes';
 
 const CatData = () => {
     const { id } = useParams();
-
     const categoria =  useLocation().pathname.split("/")[1];
-
     const [Movies, setMovies] = useState([]);
 
-    const getRandomMovies = () => {
+    const getRandomMovies = async  () => {
+        let peliculas = await getRandomItems("Movies", "release_date", "desc", 10);
         setMovies([]);
-        axios.get("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=af1f89a05a4477a5e6990c32d50ccc1d&page=1&language=es-ES&region=ES")
-        .then((res) =>  {
-            setMovies(res.data.results); 
-        });
+        setMovies(ordenarPorFecha(peliculas, 1))
     }
 
-    const getGenereMovies = () =>{
+    const getGenereMovies = async () => {
+        let peliculas = await getItemsWhereMemberArray(parseInt(id), parseInt(10));
         setMovies([]);
-        axios.get(`https://api.themoviedb.org/3/discover/movie?with_genres=${id}&api_key=af1f89a05a4477a5e6990c32d50ccc1d&page=1&language=es-ES&region=ES`)
-        .then((res) => setMovies(res.data.results));
+        setMovies(ordenarPorFecha(peliculas, 1))
     }
 
+    useEffect(() => {
+    categoria === 'categoria' ? getGenereMovies() : getRandomMovies();
+    }, [])
+    
     /*Llamo a la funcion cada vez que cambia el componente */
     useEffect(() => {
         categoria === 'categoria' ? getGenereMovies() : getRandomMovies();
-        console.log(categoria);
+        console.log("pase por ID " + categoria);
     }, [id]);
-
-    useEffect(() => {
-        console.log(Movies);
-    }, [Movies]);
 
   return (
     <div className='container d-flex flex-wrap justify-content-center ' >
@@ -42,6 +37,5 @@ const CatData = () => {
     </div>
   )
 }
-
 
 export default CatData

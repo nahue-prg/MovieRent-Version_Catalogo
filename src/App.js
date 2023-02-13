@@ -7,11 +7,13 @@ import CatData from "./components/Catalogo/CarData/CatData";
 import { Route, Routes } from "react-router-dom";
 import DescripcionPagina from "./components/DescripcionPagina/DescripcionPagina";
 import ItemDetail from "./components/ItemDetail/ItemDetail";
-import { db } from "./db/firebasea-config";
-import { collection, getDocs } from "firebase/firestore";
-import { useEffect, useState } from "react";
 import PostStore from "./components/PostStore/PostStore";
 import Slider from "./components/NetflixSlider";
+import { createContext, useEffect, useState } from "react";
+import CarritoCheckOut from "./components/CarritoCheckOut/CarritoCheckOut";
+
+
+
 
 /*Cuando queremos acceder a un documento usamos getdoc, a varios getdocs */
 const movies = [
@@ -52,57 +54,61 @@ const movies = [
     title: "Black mirror",
   },
 ];
+
+export const Carrito = createContext(null);
+
+
 function App() {
-  const [items, setItems] = useState([]);
-  const itemsCollectionRef = collection(db, "Movies");
 
-  const getItems = async () => {
-    const querySnapshot = await getDocs(itemsCollectionRef);
-    const docs = querySnapshot.docs.map((doc) => doc.data());
-    setItems(docs);
-  };
+  const [productosCart, setProductosCart] = useState([])
+
 
   useEffect(() => {
-   /* getItems();*/
-   console.log("Aca se podrian obtener los items");
-  }, []);
+    setProductosCart([]);
+  }, [])
 
   useEffect(() => {
-   /* console.log(items);*/
-  }, [items]);
-
+    console.log("en APP js se detecto el cambio de productos")
+  }, [productosCart])
+  
+  
   return (
     <div>
-      <NavBar />
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div
-              style={{
-                marginTop: "60px",
-              }}
-              className="container"
-            >
-              <ModalContainer
-                botonActivador={"Ver catalogo de peliculas"}
-                titulo={"Movie | Rent"}
-                descripcion={
-                  "Quieres ver las ultimas novedades en peliculas? Haz click para ver el catalogo!"
-                }
-                botonAccion={"Ver catalogo"}
-                botonURL={"/Peliculas"}
-                botonCerrar={"Cancelar"}
-              />
-              <DescripcionPagina />
-            </div>
-          }
-        />
-        <Route path="/Peliculas" element={<CatData />} />
-        <Route path="/Peliculas/:id" element={<ItemDetail />} />
-        <Route path="/Categoria/:id" element={<CatData />} />
-        <Route path="/PostMovies" element={<PostStore />} />
-      </Routes>
+      
+      <Carrito.Provider value={{productosCart, setProductosCart}}>
+        <NavBar />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div
+                style={{
+                  marginTop: "60px",
+                  textAlign:"center"
+                }}
+                className="container"
+              >
+                <ModalContainer
+                  botonActivador={"Ver catalogo de peliculas"}
+                  titulo={"Movie | Rent"}
+                  descripcion={
+                    "Quieres ver las ultimas novedades en peliculas? Haz click para ver el catalogo!"
+                  }
+                  botonAccion={"Ver catalogo"}
+                  botonURL={"/Peliculas"}
+                  botonCerrar={"Cancelar"}
+                />
+                <DescripcionPagina />
+              </div>
+            }
+          />
+            <Route path="/Peliculas" element={<CatData />} />
+            <Route path="/Peliculas/:id" element={<ItemDetail />} />
+            <Route path="/Categoria/:id" element={<CatData />} />
+            <Route path="/PostMovies" element={<PostStore />} /> 
+            <Route path="/Carrito" element={<CarritoCheckOut/>}/>
+        </Routes>
+      </Carrito.Provider>
       <div className="app">
         <Slider>
           {movies.map((movie) => (

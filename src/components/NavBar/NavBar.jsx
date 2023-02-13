@@ -52,7 +52,7 @@ function NavBar() {
           <Logo dark={false}></Logo>
         </NavbarBrand>
         <NavItem className={styles.CartMobile}>
-          <CartWidget number={3} />
+          <CartWidget/>
         </NavItem>
         <NavbarToggler onClick={toggle} className={styles.ToglerDesktop} />
         <Collapse isOpen={isOpen} navbar>
