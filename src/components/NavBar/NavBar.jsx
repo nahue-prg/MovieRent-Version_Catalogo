@@ -39,12 +39,14 @@ function NavBar() {
   }, []);
 
   return (
-    <div style={{ width: "100%", backgroundColor: "#212529" }}>
+    <div style={{ width: "100%", backgroundColor: "#ffffff00" }}>
       <Navbar
-        color="dark"
+
         dark
         expand="lg"
         sticky="true"
+        className={styles.menuSuperior }
+        
         style={{ maxWidth: 1300, margin: "auto" }}
       >
         <NavbarToggler onClick={toggle} className={styles.TogglerMobile} />
@@ -67,6 +69,7 @@ function NavBar() {
                     to={`/categoria/${categoria.id}`}
                     style={{ textDecoration: "none", color: "#ccc" }}
                     key={categoria.id}
+              
                   >
                     <DropdownItem>{categoria.name}</DropdownItem>
                   </Link>

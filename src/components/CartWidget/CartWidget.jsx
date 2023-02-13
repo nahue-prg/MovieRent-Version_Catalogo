@@ -3,6 +3,7 @@ import {BsFillCartFill} from "react-icons/bs";
 import {Button} from 'reactstrap'; 
 import { Carrito } from '../../App';
 import { Link } from "react-router-dom";
+import styles from "../NavBar/styles.module.css"
 
 const CartWidget = () => {
 
@@ -36,8 +37,15 @@ const CartWidget = () => {
         borderColor: "white",
         color: "white",
         borderWidth: 1 ,
-        display:'inline-block'
+        display:'inline-block',
+        padding:0,
+        height:27,
+        width:27,
+        borderRadius:'100%'
     }}
+    className={styles.boton}
+
+    
   >
    {cuenta}
     </Button> 

@@ -5,6 +5,7 @@ import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { getWhereItems } from "../../code/funcionesComunes";
 import { Carrito } from "../../App";
+import ModalContainer from "../Modal/ModalContainer";
 
 const ItemDetail = () => {
 
@@ -49,20 +50,21 @@ const ItemDetail = () => {
 
   return (
     movie[0] !== undefined ?
-    <Card key={id} style={{width:'600px'}}>
-      <CardImg top src={`https://image.tmdb.org/t/p/w500/${movie[0].poster_path}`} alt={movie.title} style={{width: 'max-content'}}/>
+    <Card key={id} style={{width:'80%', maxWidth:800, margin:'30px auto',border:'none',   background: 'linear-gradient(to left,   #bbb, #dddddd)'}}>
+      <CardImg  style={{fontWeight:'bolder', fontSize:'2rem', margin: 'auto', maxWidth:550, marginTop:50, borderRadius:10, boxShadow:'0px 0px 4px 2px rgba(0, 0, 0, 0.75)'}} top src={`https://image.tmdb.org/t/p/w500/${movie[0].poster_path}`} alt={movie.title}/>
       <CardBody>
-        <CardTitle>{movie[0].title}</CardTitle>
-         <CardSubtitle>{movie[0].overview}</CardSubtitle> 
+        <CardTitle style={{fontWeight:'bolder', fontSize:'1.8rem', textAlign: 'start', marginBottom:20}}>{movie[0].title}</CardTitle>
+         <CardSubtitle style={{ fontSize:'1.2rem',textAlign: 'start', marginBottom:20}}>{movie[0].overview}</CardSubtitle> 
         <CardText >{`Estreno: ${movie[0].release_date}`}</CardText>
         <CardText>{`Duracion : ${movie[0].runtime ===undefined ? "Sin definir" : movie[0].runtime + " minutos"}` }</CardText>
-        <CardText>{`$ ${movie[0].precio}`}</CardText>
+        <CardText style={{height:'max-content',
+          overflowY:'hidden', fontWeight:"bolder", fontSize:"1.2rem" , border:'1px solid  #999f', padding:10, borderRadius:10}}>{`$ ${movie[0].precio}`}</CardText>
 
        
         <div className="container" style={{width:"100%"}}>
           <div className="row" style={{width:"100%" , marginLeft:0}}>
-            <div className="col-5 justify-content-center align-items-center">
-              <Button color="primary" className="d-flex justify-content-center align-items-center" onClick={() => agregarAlCarrito()} style={{}}>Agregar al carrito</Button>
+            <div className="col-5 justify-content-center align-items-center" style={{textAlign:'center'}}>
+              <Button color="primary" className="d-flex justify-content-center align-items-center" style={{width:'', marginRight:0}} onClick={() => agregarAlCarrito()} >Agregar al carrito</Button>
             </div>
             <div className="col-2 d-flex justify-content-center align-items-center">
               <Button color="primary" onClick={() => restarSemana()}>-</Button>
@@ -81,7 +83,9 @@ const ItemDetail = () => {
             </div>
           </div>
         </div>
-      
+      <ModalContainer estado={CartData.productosCart} descripcion={` Titulo : ${movie[0].title} | 
+                                                                     Semanas de alquiller: ${semana} | \n
+                                                                     Total: $${semana * parseFloat(movie[0].precio)} \n`} titulo={"Sumado al carrito!"} botonCerrar={"Ok"}/>
       </CardBody>
     </Card>: ""
   );

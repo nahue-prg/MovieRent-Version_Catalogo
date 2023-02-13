@@ -37,6 +37,9 @@
   }
 }
 
-.modal{
-  text-align: center;
+
+.raiz{
+
+  background: linear-gradient(to bottom,   rgb(35, 39, 43), #ffffff);
+
 }

@@ -73,7 +73,7 @@ function App() {
   
   
   return (
-    <div>
+    <div className="raiz">
       
       <Carrito.Provider value={{productosCart, setProductosCart}}>
         <NavBar />
