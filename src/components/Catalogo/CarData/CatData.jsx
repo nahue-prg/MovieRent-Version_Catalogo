@@ -10,13 +10,13 @@ const CatData = () => {
     const [Movies, setMovies] = useState([]);
 
     const getRandomMovies = async  () => {
-        let peliculas = await getRandomItems("Movies", "release_date", "desc", 10);
+        let peliculas = await getRandomItems("Movies", "release_date", "desc", 20);
         setMovies([]);
         setMovies(ordenarPorFecha(peliculas, 1))
     }
 
     const getGenereMovies = async () => {
-        let peliculas = await getItemsWhereMemberArray(parseInt(id), parseInt(10));
+        let peliculas = await getItemsWhereMemberArray(parseInt(id), parseInt(20));
         setMovies([]);
         setMovies(ordenarPorFecha(peliculas, 1))
     }
@@ -32,7 +32,7 @@ const CatData = () => {
     }, [id]);
 
   return (
-    <div className='container d-flex flex-wrap justify-content-center ' >
+    <div className='container d-flex flex-wrap justify-content-center' style={{marginBottom: 60}} >
         <Lista movies={Movies}></Lista>
     </div>
   )

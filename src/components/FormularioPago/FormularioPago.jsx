@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from "../../db/firebasea-config";
 import {
   Form,
   FormGroup,
@@ -9,8 +11,10 @@ import {
   Button,
 } from "reactstrap";
 import { Carrito } from "../../App";
+import { Navigate  } from 'react-router-dom';
 
 const FormularioPago = () => {
+
   const carrito = useContext(Carrito);
   const [email, setEmail] = useState("");
   const [emailR, setEmailR] = useState("");
@@ -22,19 +26,54 @@ const FormularioPago = () => {
   const [tarjetaValida, setTarjetaValida] = useState(null);
   const [expiracionValida, setExpiracionValida] = useState(null);
   const [cSeguridadValido, setCSeguridadValido] = useState(null);
+  const [shouldRedirect, setShouldRedirect] = useState(false);
+  const ref = collection(db, "Pedidos");
 
   /*INPUT VERDE = <Input valid /> */
   /*INPUT ROJO = <Input invalid /> */
   /*Texto abajo = <FormFeedback valid>Sweet! that name is available</FormFeedback>*/
 
-  const validarForm = (e) => {
+  const checkoutPago = (e) =>{
     e.preventDefault();
-    validateEmail(email) ? setEmailValidoPri(true) : setEmailValidoPri(false);
-    email === emailR ? setEmailValido(true) : setEmailValido(false);
-    !isNaN(nroTarjeta) && nroTarjeta.length >= 13 && nroTarjeta.length <= 16 ? setTarjetaValida(true) : setTarjetaValida(false);
-    isExpiryDateValid(fExpiracion) ? setExpiracionValida(true) : setExpiracionValida(false);
-    isSecurityCodeValid(cSeguridad) ? setCSeguridadValido(true) : setCSeguridadValido(false);
+  if( email.length > 0 && emailR.length > 0 && nroTarjeta.length > 0 && fExpiracion.length > 0 && cSeguridad.length > 0 )
+    validarForm() === true ? EnviarPedido() : alert("No es posible procesar el pago. Verifique sus ingresos")
+  else
+    alert("Llene todos los campos para continuar con el pago");
+  }
+
+  const EnviarPedido = async () =>{
+    const docRef = await addDoc((ref),{
+        email : email,
+        total : "$" + carrito.productosCart
+        .map((x) => x.precio * x.cantidad)
+        .reduce((a, b) => a + b, 0),
+        productos: carrito.productosCart
+        .map((x) => ({id: x.id, title: x.title, cantidad: x.cantidad}))
+
+    });
+    alert("Numero de pedido: " + docRef.id)
+    carrito.setProductosCart([]);
+    setShouldRedirect(true);
+  }
+
+  const validarForm = () => {
+    if(emailValidoPri && emailValido && tarjetaValida && expiracionValida && cSeguridadValido){
+      return true;
+    }
+    else return false;
   };
+
+  const validarFExpirtacion = () => {
+    isExpiryDateValid(fExpiracion) ? setExpiracionValida(true) : setExpiracionValida(false);
+  }
+
+  const  validarTarjeta = () =>{
+    !isNaN(nroTarjeta) && nroTarjeta.length >= 13 && nroTarjeta.length <= 16 ? setTarjetaValida(true) : setTarjetaValida(false);
+  }
+
+  const validarCodigo = () => {
+    isSecurityCodeValid(cSeguridad) ? setCSeguridadValido(true) : setCSeguridadValido(false);
+  }
 
   function isExpiryDateValid(expiryDate) {
     try {
@@ -57,28 +96,41 @@ const FormularioPago = () => {
     }
   }
 
-  function isSecurityCodeValid(securityCode) {
-    if (!isNaN(securityCode) && securityCode.length == 3) return true;
-    else return false;
+  const isSecurityCodeValid = (securityCode) => {
+    if (!isNaN(securityCode) && securityCode.length == 3) 
+      return true;
+    else 
+      return false;
   }
 
-  function validateEmail(email) {
+  const validateEmail = () => {
     let re =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    re.test(String(email).toLowerCase())? setEmailValidoPri(true) : setEmailValidoPri(false);
+    
+    validarEmailCopia();
+  }
+
+  const validarEmailCopia = () => {
+    email === emailR ? setEmailValido(true) : setEmailValido(false);
+  }
+
+  if (shouldRedirect) {
+    return <Navigate to="/" />;
   }
 
   return (
     <>
       {carrito.productosCart.length > 0 ? (
-        <Form>
+        <Form className="container" style={{maxWidth:600, marginTop:30}}>
           <FormGroup>
-            <Label for="exampleEmail">Repita su email</Label>
+            <Label for="exampleEmail">Email</Label>
             <Input
               invalid={emailValidoPri === false}
               valid={emailValidoPri === true}
               type="email"
               onChange={(e) => setEmail(e.target.value)}
+               onBlur={() => validateEmail()}
             />
             <FormFeedback invalid>
               El email ingresado no es valido
@@ -91,6 +143,7 @@ const FormularioPago = () => {
               invalid={emailValido === false}
               valid={emailValido === true}
               onChange={(e) => setEmailR(e.target.value)}
+               onBlur={() => validarEmailCopia()}
             />
             <FormFeedback invalid>
               Los emails ingresados no coinciden
@@ -102,6 +155,7 @@ const FormularioPago = () => {
               invalid={tarjetaValida === false}
               valid={tarjetaValida === true}
               onChange={(e) => setNroTarjeta(e.target.value)}
+               onBlur={() => validarTarjeta()}
             />
             <FormFeedback invalid>
               La tarjeta ingresada no es valida! Debe ser numerica y contener
@@ -115,6 +169,7 @@ const FormularioPago = () => {
               valid={expiracionValida === true}
               placeholder="MM/YY *"
               onChange={(e) => setFexpiracion(e.target.value)}
+               onBlur={() => validarFExpirtacion()}
             />
             <FormFeedback invalid>
               La fecha de expiracion no es valida (MM/YY)
@@ -127,6 +182,7 @@ const FormularioPago = () => {
               valid={cSeguridadValido === true}
               placeholder="CVV *"
               onChange={(e) => setCSeguridad(e.target.value)}
+               onBlur={() => validarCodigo()}
             />
             <FormFeedback invalid>
               El codigo de seguridad no es valido! Debe ser numerico y de 3
@@ -134,11 +190,11 @@ const FormularioPago = () => {
             </FormFeedback>
           </FormGroup>
           <FormGroup></FormGroup>
-          <Button onClick={(event) => validarForm(event)}>Submit</Button>
+          <Button color="success" onClick={(event) => checkoutPago(event)}>Realizar pago</Button>
         </Form>
       ) : (
         <div>
-          No hay alquileres agregados par pagar. Agregue su contenido favorito y
+          No hay alquileres agregados para pagar. Agregue su contenido favorito y
           luego realize el pago.
         </div>
       )}
