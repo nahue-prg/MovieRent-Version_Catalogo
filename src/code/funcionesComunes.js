@@ -1,5 +1,5 @@
 import { db } from "../db/firebasea-config";
-import { collection, getDocs, limit , query, orderBy, where } from "firebase/firestore";
+import { collection, getDocs, limit , query, orderBy, where, doc, getDoc  } from "firebase/firestore";
 
 //------Funciones comunes
 export const ordenarPorFecha = (array, orden) => {
@@ -66,3 +66,12 @@ export const getItemsWhereMemberArray = async (IDgenero, limite) =>{
     return docs;
 }
   
+export const getItemWhereIdDoc = async (coleccion, IDdoc) =>{
+    const docRef = doc(db, coleccion.toString(), IDdoc.toString());
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) 
+        return docSnap.data();
+    else 
+        return null;
+      
+}

@@ -12,7 +12,6 @@ const CartWidget = () => {
 
   useEffect(() => {
     setContador(productosCart.length);
-    console.log("Se actualizo productosCart");
   }, [productosCart]);
 
   return (

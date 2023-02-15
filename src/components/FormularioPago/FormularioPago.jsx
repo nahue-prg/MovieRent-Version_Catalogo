@@ -7,7 +7,6 @@ import {
   Label,
   Input,
   FormFeedback,
-  FormText,
   Button,
 } from "reactstrap";
 import { Carrito } from "../../App";
@@ -48,7 +47,7 @@ const FormularioPago = () => {
         .map((x) => x.precio * x.cantidad)
         .reduce((a, b) => a + b, 0),
         productos: carrito.productosCart
-        .map((x) => ({id: x.id, title: x.title, cantidad: x.cantidad}))
+        .map((x) => ({id: x.id, title: x.title, cantidad: x.cantidad, precio: x.precio}))
 
     });
     alert("Numero de pedido: " + docRef.id)
@@ -120,7 +119,8 @@ const FormularioPago = () => {
   }
 
   return (
-    <>
+    <main style={{marginTop:60}}>
+    <h1 style={{textAlign:'center'}}>Formulario de pago</h1>
       {carrito.productosCart.length > 0 ? (
         <Form className="container" style={{maxWidth:600, marginTop:30}}>
           <FormGroup>
@@ -193,12 +193,12 @@ const FormularioPago = () => {
           <Button color="success" onClick={(event) => checkoutPago(event)}>Realizar pago</Button>
         </Form>
       ) : (
-        <div>
+        <h4 style={{textAlign:'center', color:'red'}}>
           No hay alquileres agregados para pagar. Agregue su contenido favorito y
           luego realize el pago.
-        </div>
+        </h4>
       )}
-    </>
+    </main>
   );
 };
 

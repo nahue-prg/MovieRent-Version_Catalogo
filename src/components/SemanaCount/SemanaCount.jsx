@@ -16,7 +16,7 @@ const SemanaCount = ({semana, onChangeSemana}) => {
           </Button>
         </div>
         <div className="col-3 d-flex justify-content-center align-items-center" style={{ width:'max-content' }}>
-          <span style={{ fontWeight: "bolder", border:'1px solid #aaaa',padding: '5px 10px', borderRadius:10, width:120, textAlign:'center' }}>
+          <span style={{ fontWeight: "bolder",padding: '5px 10px', borderRadius:10, width:120, textAlign:'center' }}>
             {semana.toString()} semana{semana == 1 ? "" : "s"}
           </span>
         </div>

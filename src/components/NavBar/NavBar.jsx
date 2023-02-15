@@ -39,9 +39,9 @@ function NavBar() {
   }, []);
 
   return (
-    <div style={{ width: "100%", backgroundColor: "#ffffff00" }}>
+    <div style={{ width: "100%", backgroundColor: "#ffffff00"}} className='bg-dark'>
       <Navbar
-
+        color='dark'
         dark
         expand="lg"
         sticky="true"
@@ -69,7 +69,6 @@ function NavBar() {
                     to={`/categoria/${categoria.id}`}
                     style={{ textDecoration: "none", color: "#ccc" }}
                     key={categoria.id}
-              
                   >
                     <DropdownItem>{categoria.name}</DropdownItem>
                   </Link>
@@ -77,10 +76,10 @@ function NavBar() {
               </DropdownMenu>
             </UncontrolledDropdown>
             <NavItem>
-              <NavLink href="#">Politicas</NavLink>
+            <Link to="/Pagar" style={{ textDecoration: "none", color: "#ccc" }}><NavLink >Comprar</NavLink></Link>
             </NavItem>
             <NavItem>
-              <NavLink href="#">Mi cuenta</NavLink>
+              <Link to="/Pedidos" style={{ textDecoration: "none", color: "#ccc" }}><NavLink >Mis pedidos</NavLink></Link>
             </NavItem>
           </Nav>
         </Collapse>

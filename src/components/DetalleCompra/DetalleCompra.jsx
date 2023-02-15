@@ -42,7 +42,7 @@ const DetalleCompra = () => {
   };
 
   return (
-    <div className="container" style={{ marginTop: 20 }}>
+    <div className="container" style={{ marginTop: 20, marginBottom:30 }}>
       <div className="container" style={{ textAlign: "center" }}>
         <h1>Carrito</h1>
       </div>
@@ -62,20 +62,20 @@ const DetalleCompra = () => {
           );
         })
       ) : (
-        <div>El carrito esta vacio</div>
+        <h4 style={{textAlign:'center', color:'red'}}>El carrito esta vacio</h4>
       )}
       {carrito.productosCart.length > 0 ? (
         <div>
-          <div>
-            <span>
+          <div style={{marginTop:10}}>
+            <h3 style={{textAlign:'center'}}>
               Total: $
               {carrito.productosCart
                 .map((x) => x.precio * x.cantidad)
                 .reduce((a, b) => a + b, 0)}{" "}
-            </span>
+            </h3>
           </div>
-          <div>
-           <Link to="/Pagar"><Button color="success">Finalizar compra</Button></Link>
+          <div style={{textAlign:'center', marginTop:15}}>
+           <Link to="/Pagar"><Button color="success" style={{fontSize:'1.4rem'}}>Finalizar compra</Button></Link>
           </div>
         </div>
       ) : (

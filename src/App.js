@@ -12,11 +12,8 @@ import Slider from "./components/NetflixSlider";
 import { createContext, useEffect, useState } from "react";
 import DetalleCompra from "./components/DetalleCompra/DetalleCompra";
 import FormularioPago from "./components/FormularioPago/FormularioPago";
+import Pedidos from "./components/Pedidos/Pedidos";
 
-
-
-
-/*Cuando queremos acceder a un documento usamos getdoc, a varios getdocs */
 // const movies = [
 //   {
 //     id: 1,
@@ -64,15 +61,10 @@ function App() {
   const [productosCart, setProductosCart] = useState([])
 
 
-  useEffect(() => {
-    setProductosCart([]);
-  }, [])
+  // useEffect(() => {
+  //   setProductosCart([]);
+  // }, [])
 
-  useEffect(() => {
-    console.log("en APP js se detecto el cambio de productos")
-  }, [productosCart])
-  
-  
   return (
     <div className="raiz">
       
@@ -89,17 +81,19 @@ function App() {
                 }}
                 className="container"
               >
+                <DescripcionPagina/>
+                <div style={{marginTop:60}}></div>
                 <ModalContainer
                   botonActivador={"Ver catalogo de peliculas"}
                   titulo={"Movie | Rent"}
                   descripcion={
                     "Quieres ver las ultimas novedades en peliculas? Haz click para ver el catalogo!"
+                 
                   }
                   botonAccion={"Ver catalogo"}
                   botonURL={"/Peliculas"}
-                  botonCerrar={"Cancelar"}
-                />
-                <DescripcionPagina />
+                  botonCerrar={"Cancelar"}  
+                />   
               </div>
             }
           />
@@ -109,6 +103,7 @@ function App() {
             <Route path="/PostMovies" element={<PostStore />} /> 
             <Route path="/Carrito" element={<DetalleCompra/>}/>
             <Route path="/Pagar" element={<FormularioPago/>}/>
+            <Route path="/Pedidos" element={<Pedidos/>}/>
             {/* <Route path="/Pedido" element={<FormularioPago/>}/> */}
         </Routes>
       </Carrito.Provider>
