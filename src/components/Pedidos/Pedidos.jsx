@@ -89,7 +89,7 @@ const Pedidos = () => {
               Codigo no valido
             </FormFeedback>
           </FormGroup>
-          <Button color="success" onClick={(event) => BuscarPorCodigo(event)}>Realizar pago</Button>
+          <Button color="success" onClick={(event) => BuscarPorCodigo(event)}>Buscar</Button>
         </Form>
         <section>
         {pedidoPorCodigo!==null ?
