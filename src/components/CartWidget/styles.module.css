@@ -1,0 +1,28 @@
+.botonOpe{
+    --bs-btn-padding-x: 0px !important;
+    --bs-btn-padding-y: 0px !important;
+    margin-right: 3px;
+    padding: 0 !important;
+    border-radius:'100%' !important;
+    width:max-content;
+    height: max-content;
+    color:white !important;
+    border-color: white !important;
+    border-radius: 100%;
+}
+
+.botonOpe div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width:15px; 
+    height:15px;
+    font-weight:bolder;
+    border-radius:100%;
+    font-size: 0.5rem;
+}
+
+.botonOpe:hover{   
+    background-color: white !important;
+    color:black !important;
+}

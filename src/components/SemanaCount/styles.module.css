@@ -1,0 +1,8 @@
+.botonOpe{
+    --bs-btn-padding-x: 0px !important;
+    --bs-btn-padding-y: 0px !important;
+    padding: 0 !important;
+    border-radius:'100%' !important;
+    width:max-content;
+    height: max-content;
+}

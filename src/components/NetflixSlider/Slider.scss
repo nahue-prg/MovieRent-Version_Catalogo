@@ -4,8 +4,8 @@
   position: relative;
 
   &__container {
+
     display: flex;
-    padding: 0 55px;
     transition: transform 300ms ease 100ms;
     z-index: 3;
     width: 100%;
@@ -16,14 +16,14 @@
   }
 
   &:not(&--open) .item:hover {
-    transform: scale(1.5) !important;
+    transform: scale(1.2) !important;
   }
 
   &:not(&--open):hover .item {
-    transform: translateX(-25%);
+    transform: translateX(-12%);
   }
 
   &:not(&--open) .item:hover ~ .item {
-    transform: translateX(25%);
+    transform: translateX(12%);
   }
 }

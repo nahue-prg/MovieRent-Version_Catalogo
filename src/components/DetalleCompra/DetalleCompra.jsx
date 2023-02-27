@@ -2,9 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import { Carrito } from "../../App";
 import { Button } from "reactstrap";
-import styles from "./styles.module.css";
 import FilaDetalle from "./FilaDetalle";
-
+import { BsFillCartFill } from "react-icons/bs";
 const DetalleCompra = () => {
   const carrito = useContext(Carrito);
   const [semanas, setSemanas] = useState([]);
@@ -42,9 +41,9 @@ const DetalleCompra = () => {
   };
 
   return (
-    <div className="container" style={{ marginTop: 20, marginBottom:30 }}>
-      <div className="container" style={{ textAlign: "center" }}>
-        <h1>Carrito</h1>
+    <div className="container" style={{ marginTop: 35, marginBottom:30 }}>
+      <div className="container d-flex justify-content-center align-items-center" style={{ textAlign: "center" }}>
+          <h1 style={{fontWeight:'lighter', display:'inline-block', marginRight:10, marginBottom:0}}>Carrito </h1> <BsFillCartFill style={{fontSize:'1.5rem'}}/>
       </div>
       {productos.length > 0 ? (
         productos.map((element, index) => {
@@ -62,21 +61,25 @@ const DetalleCompra = () => {
           );
         })
       ) : (
-        <h4 style={{textAlign:'center', color:'red'}}>El carrito esta vacio</h4>
+        <h4 style={{textAlign:'center', color:'', marginTop:30}}>Ups.. el carrito esta vacio</h4>
       )}
       {carrito.productosCart.length > 0 ? (
-        <div>
-          <div style={{marginTop:10}}>
-            <h3 style={{textAlign:'center'}}>
-              Total: $
-              {carrito.productosCart
-                .map((x) => x.precio * x.cantidad)
-                .reduce((a, b) => a + b, 0)}{" "}
-            </h3>
+        <div className="row" >
+        <div className="container">
+          <div className="row" >
+            <div className="col-12 col-md-6 d-flex align-items-center justify-content-center mt-4" style={{textAlign:'center'}}>
+              <span style={{textAlign:'center', display:'inline-block' , fontSize:'1.5rem'}}>
+                    <b>Total:</b> $
+                    {carrito.productosCart
+                      .map((x) => x.precio * x.cantidad)
+                      .reduce((a, b) => a + b, 0)}{" "}
+                  </span>
+            </div>
+            <div className="col-12 col-md-6 d-flex align-items-center justify-content-center mt-4" style={{textAlign:'center'}}>
+              <Link to="/Pagar"><Button color="success" style={{fontSize:'1.4rem'}}>Finalizar compra</Button></Link>
+            </div>
           </div>
-          <div style={{textAlign:'center', marginTop:15}}>
-           <Link to="/Pagar"><Button color="success" style={{fontSize:'1.4rem'}}>Finalizar compra</Button></Link>
-          </div>
+        </div>
         </div>
       ) : (
         ""

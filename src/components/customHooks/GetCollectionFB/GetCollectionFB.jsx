@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { db } from "../../../db/firebasea-config";
-import { collection, getDocs, limit , query, orderBy } from "firebase/firestore";
+import {getItemsWhereMemberArray} from '../../../code/funcionesComunes'
 
-function GetCollectionFB(nombreColeccion) {
+function GetCollectionFB(IDgenero, limite) {
 
   const [data, setData] = useState([]);
-  const itemsCollection = collection(db, nombreColeccion.toString());
-  
-  const q = query(itemsCollection, orderBy("id", "desc"), limit(10));
 
   const getItems = async () => {
-    const querySnapshot = await getDocs(q);
-    const docs = querySnapshot.docs.map((doc) => doc.data());
-    setData(docs);
+    let data = await getItemsWhereMemberArray(parseInt(IDgenero), parseInt(limite));
+    console.log("desdeGetCollection FB");
+    console.log(data);
+    setData(data);
   };
 
   useEffect(() => {

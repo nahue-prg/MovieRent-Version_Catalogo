@@ -1,15 +1,14 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle, Button } from 'reactstrap';
 import { Link } from 'react-router-dom'
 import styles from "./ItemStyles.css"
 import { Carrito } from '../../../App';
-import ModalContainer from '../../Modal/ModalContainer';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Item = ({id, title, overview, estreno, poster_path, precio, vote_average}) => {
 
   const carro = useContext(Carrito);
-  const [modal, lanzarModal] = useState(false);
 
 
 const agregarAlCarrito = () => {
@@ -18,13 +17,15 @@ const agregarAlCarrito = () => {
   index !== -1 ? aux[index].cantidad += 1 : aux.push({ id : id , title :  title ,  precio :  precio , cantidad:  1, imagen :  poster_path}) ;
   carro.setProductosCart(aux);
   console.log(carro.productosCart);
-  lanzarModal(!modal);
+  //lanzarModal(!modal);
+  toast(`La pelicula "${title}" fue agregada al carrito!!`, {
+    icon: '🎬',
+  });
 }
 
   return (
     <Card className={styles.card} key={id} sm="6" >
-       <ModalContainer estado={modal} descripcion={` Titulo : ${title} | Total: ${precio} `} titulo={"Sumado al carrito!"} botonCerrar={"Ok"}/>
-      <CardImg top src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} style={{width: '100%'}}/>
+      <CardImg top src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt={title} style={{width:'100%'}}/>
       <CardBody>
           <CardTitle style={{fontSize:'1.2rem', height:'1.7rem', overflow:'hidden', marginBottom: 15}}><b>{title}</b></CardTitle>
           <CardSubtitle style={{fontWeight:'', marginBottom:5}}>{`Estreno: ${estreno}`}</CardSubtitle> 
@@ -32,7 +33,7 @@ const agregarAlCarrito = () => {
                           overflowY:'hidden',
                           marginBottom:0
                           }}>{overview}</CardText> 
-                          <div style={{boxShadow:'0 0 10px rgba(0, 0, 0, 3)', height:2, width:'100%', backgroundColor:'#ddd', marginBottom:20}}>
+                          <div style={{boxShadow:'0 0 12px rgba(0, 0, 0, 1px)', height:1, width:'100%', backgroundColor:'#dddddd88', marginBottom:20}}>
                           </div>   
           <CardText style={{height:'max-content',
           overflowY:'hidden', fontWeight:"bolder", fontSize:"1.2rem" , border:'1px solid  #ccca', padding:10, borderRadius:10}}>$ {precio}</CardText>    
@@ -50,6 +51,10 @@ const agregarAlCarrito = () => {
             </div>
           </div>
           </div>
+        <Toaster
+        position="top-center"
+        reverseOrder={false}
+        />
       </CardBody>
      
     </Card>

@@ -4,9 +4,25 @@
   margin: 0 2px;
   position: relative;
 
+
   img {
-    height: 100%;
-    width: 100%;
     vertical-align: top;
+    width: 300px;
+    height: 100%;
+    border:1px solid #1c1c1c32;
+    border-radius: 10px;
+   
+  }
+}
+
+.item:hover{
+  cursor:pointer;
+}
+
+@media screen and (max-width:560px){
+  .item { 
+    img {
+      width: 220px;    
+    }
   }
 }
