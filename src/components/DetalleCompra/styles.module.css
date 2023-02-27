@@ -9,8 +9,12 @@
 .contenedor{
     margin:auto;
     padding:20px 0;
-    border-bottom: 1px solid rgba(33,37,41);
+    border-bottom: 1px solid rgba(37, 40, 43, 0.368);
    
     max-width: 1250px;
 }
 
+.boton{
+   
+    
+}

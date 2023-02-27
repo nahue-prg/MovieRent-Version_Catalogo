@@ -64,6 +64,13 @@ function NavBar() {
                 Categorias
               </DropdownToggle>
               <DropdownMenu center dark>
+                  <Link
+                    to={`/Peliculas`}
+                    style={{ textDecoration: "none", color: "#ccc" }}
+                    key={'000001'}
+                  >
+                    <DropdownItem>Todas</DropdownItem>
+                  </Link>
                 {categorias.map((categoria) => (
                   <Link
                     to={`/categoria/${categoria.id}`}

@@ -11,6 +11,8 @@ import {
 } from "reactstrap";
 import { Carrito } from "../../App";
 import { Navigate  } from 'react-router-dom';
+import Loader from "../Loader/Loader";
+import toast, { Toaster } from 'react-hot-toast';
 
 const FormularioPago = () => {
 
@@ -26,6 +28,7 @@ const FormularioPago = () => {
   const [expiracionValida, setExpiracionValida] = useState(null);
   const [cSeguridadValido, setCSeguridadValido] = useState(null);
   const [shouldRedirect, setShouldRedirect] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const ref = collection(db, "Pedidos");
 
   /*INPUT VERDE = <Input valid /> */
@@ -35,12 +38,13 @@ const FormularioPago = () => {
   const checkoutPago = (e) =>{
     e.preventDefault();
   if( email.length > 0 && emailR.length > 0 && nroTarjeta.length > 0 && fExpiracion.length > 0 && cSeguridad.length > 0 )
-    validarForm() === true ? EnviarPedido() : alert("No es posible procesar el pago. Verifique sus ingresos")
+    validarForm() === true ? EnviarPedido() : toast.error("Los datos ingresados no son validos")
   else
-    alert("Llene todos los campos para continuar con el pago");
+    toast.error("Llene el formulario para continuar con el pago.")
   }
 
   const EnviarPedido = async () =>{
+    setIsLoading(true);
     const docRef = await addDoc((ref),{
         email : email,
         total : "$" + carrito.productosCart
@@ -53,6 +57,7 @@ const FormularioPago = () => {
     alert("Numero de pedido: " + docRef.id)
     carrito.setProductosCart([]);
     setShouldRedirect(true);
+    setIsLoading(false);
   }
 
   const validarForm = () => {
@@ -122,6 +127,7 @@ const FormularioPago = () => {
     <main style={{marginTop:60}}>
     <h1 style={{textAlign:'center'}}>Formulario de pago</h1>
       {carrito.productosCart.length > 0 ? (
+        <>
         <Form className="container" style={{maxWidth:600, marginTop:30}}>
           <FormGroup>
             <Label for="exampleEmail">Email</Label>
@@ -190,14 +196,20 @@ const FormularioPago = () => {
             </FormFeedback>
           </FormGroup>
           <FormGroup></FormGroup>
-          <Button color="success" onClick={(event) => checkoutPago(event)}>Realizar pago</Button>
+          <Button disabled={isLoading===true} color="success" onClick={(event) => checkoutPago(event)}>Realizar pago</Button>
         </Form>
+         {isLoading === true ? <Loader padding={30}/> :  ""}
+         </>
       ) : (
         <h4 style={{textAlign:'center', color:'red'}}>
           No hay alquileres agregados para pagar. Agregue su contenido favorito y
           luego realize el pago.
         </h4>
       )}
+       <Toaster
+        position="top-center"
+        reverseOrder={false}
+        />
     </main>
   );
 };
