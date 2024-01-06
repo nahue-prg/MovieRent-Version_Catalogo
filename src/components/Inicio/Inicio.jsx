@@ -80,7 +80,7 @@ const movies = [
 ];
 
 const Inicio = () => {
-  const  AccionMovies  =  GetCollectionFB(28, 5);
+  const  AccionMovies  =  GetCollectionFB(28, 12);
   const [AccionGenre, setAccionGenre] =  useState([]);
 
  useEffect(() => {
